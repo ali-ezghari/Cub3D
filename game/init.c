@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aezghari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:06:26 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/19 15:13:33 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:56:56 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	init_player(t_game *game, t_player *player)
 
 	x = game->data->s_dir.y;
 	y = game->data->s_dir.x;
-	player->move_speed = 0.3;
+	player->move_speed = 0.2;
 	player->turn_dir = 0;
 	player->walk_dir = 0;
 	player->strafe_dir = 0;
-	player->rotation_speed = 0.3 * (PI / 180);
+	player->rotation_speed = 0.05 * (PI / 180);
 	player->px = x * game->tile_size + game->tile_size / 2;
 	player->py = y * game->tile_size + game->tile_size / 2;
 	init_player_rotation(player, game->data->s_dir.dir);
@@ -78,15 +78,15 @@ void	init_mlx(t_game *game)
 			game->width, game->height, "cub3d");
 	if (!game->win_window)
 		cleanup_and_exit(game, EXIT_FAILURE);
-	game->img.img_ptr = mlx_new_image(game->mlx_connection,
+	game->img.img = mlx_new_image(game->mlx_connection,
 			game->width, game->height);
-	if (!game->img.img_ptr)
+	if (!game->img.img)
 		cleanup_and_exit(game, EXIT_FAILURE);
-	game->img.img_pixel_ptr = mlx_get_data_addr(
-			game->img.img_ptr,
+	game->img.addr = mlx_get_data_addr(
+			game->img.img,
 			&game->img.bits_per_pixel,
 			&game->img.line_length,
 			&game->img.endian);
-	if (!game->img.img_pixel_ptr)
+	if (!game->img.addr)
 		cleanup_and_exit(game, EXIT_FAILURE);
 }

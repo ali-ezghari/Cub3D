@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aezghari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:38:19 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/19 17:39:59 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:18:24 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char *argv[])
 	init_game(&game);
 	init_mlx(&game);
 	init_player(&game, &game.player);
+	load_textures(&game);
 	mlx_hook(game.win_window, 2, 1L << 0, handle_keypress, &game);
 	mlx_hook(game.win_window, 3, 1L << 1, handle_keyrelease, &game);
 	mlx_hook(game.win_window, 17, 0, handle_destroy, &game);

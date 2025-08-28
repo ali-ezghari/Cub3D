@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/20 18:32:16 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:47:03 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <X11/X.h>
 # include <stdbool.h>
 # include <limits.h>
+# include <cub.h>
 
 # define PATH_MAX 4096 
 
@@ -44,7 +45,27 @@
 # define COLOR_BLACK 0x000000
 # define COLOR_GREY 0x808080
 
+#define COLOR_NORTH 0xFF0000   // Red
+#define COLOR_SOUTH 0x00FF00   // Green
+#define COLOR_EAST  0x0000FF   // Blue
+#define COLOR_WEST  0xFFFF00   // Yellow
+
+
+#define MIN(a, b) ((a) < (b) ? (a) : (b))
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
+
 # define SCALE_FACTOR 0.2
+
+typedef struct s_tex 
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bpp;
+    int     line_len;
+    int     endian;
+} t_tex;
 
 typedef struct s_horz
 {
@@ -70,25 +91,44 @@ typedef struct s_vert
 
 typedef struct s_img
 {
-	void	*img_ptr;
-	char	*img_pixel_ptr;
+	void	*img;
+	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
 }			t_img;
 
+// typedef struct s_ray
+// {
+// 	double	wall_hit_x;
+// 	double	wall_hit_y;
+// 	double	distance;
+// 	int		was_hit_vertical;
+// 	double	ray_angle;
+// 	bool	is_facing_up;
+// 	bool	is_facing_down;
+// 	bool	is_facing_right;
+// 	bool	is_facing_left;
+// }			t_ray;
+
 typedef struct s_ray
 {
-	double	wall_hit_x;
-	double	wall_hit_y;
-	double	distance;
-	int		was_hit_vertical;
-	double	ray_angle;
-	bool	is_facing_up;
-	bool	is_facing_down;
-	bool	is_facing_right;
-	bool	is_facing_left;
-}			t_ray;
+    double wall_hit_x;
+    double wall_hit_y;
+    double distance;
+    int was_hit_vertical;
+    double ray_angle;
+    bool is_facing_up;
+    bool is_facing_down;
+    bool is_facing_right;
+    bool is_facing_left;
+    
+    // Add these for wall rendering optimization:
+    int wall_height;
+    int y_start;
+    t_tex *wall_texture;    // Cache the texture pointer
+    int tex_x;              // Cache the texture x coordinate
+} t_ray;
 
 typedef struct s_player
 {
@@ -116,7 +156,13 @@ typedef struct s_game
 	struct s_ray	*rays;
 	struct s_player	player;
 	struct s_img	img;
-	struct g_info	*data;
+	struct s_info	*data;
+	// sturct t_info	info;
+
+	t_tex   tex_north;
+    t_tex   tex_south;
+    t_tex   tex_east;
+    t_tex   tex_west;
 }					t_game;
 
 typedef struct g_help_varible
@@ -164,7 +210,7 @@ typedef struct g_start_dir
 	int				y;
 }					t_start_dir;
 
-typedef struct g_info
+typedef struct s_info
 {
 	t_directions	dir;
 	t_color			color;
@@ -231,7 +277,8 @@ void				init_horz_ray(t_game *game, t_player *player,
 						t_ray *ray, t_horz *h);
 bool				find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h);
 
-void				my_mlx_pixel_put(t_game *data, int x, int y, int color);
+// void				my_mlx_pixel_put(t_game *data, int x, int y, int color);
+void				my_mlx_pixel_put(t_game *data, int x, int y, unsigned int color);
 double				normalize_angle(double angle);
 int					has_wall_at(t_game *game, int x, int y);
 double				_2points_dist(double x0, double y0, double x1, double y1);
@@ -248,4 +295,7 @@ void				update(t_game *game, t_player *player);
 void				init_player(t_game *game, t_player *player);
 void				init_game(t_game *game);
 void				init_mlx(t_game *game);
+void 				render_wall_column(t_game *game, int x, int y, int height, t_tex *texture, int tex_x);
+void 				load_textures(t_game *game);
+
 #endif

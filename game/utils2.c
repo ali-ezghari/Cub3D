@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aezghari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:31:47 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/19 21:31:48 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/08/28 18:56:19 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,19 @@ int	has_wall_at(t_game *game, int x, int y)
 	return (game->data->map[map_y][map_x] == '1');
 }
 
-void	my_mlx_pixel_put(t_game *data, int x, int y, int color)
-{
-	char	*dst;
+// void	my_mlx_pixel_put(t_game *data, int x, int y, int color)
+// {
+// 	char	*dst;
 
-	dst = data->img.img_pixel_ptr + (y * data->img.line_length + x
-			* (data->img.bits_per_pixel / 8));
-	*(unsigned int *)dst = color;
-}
+// 	dst = data->img.img_pixel_ptr + (y * data->img.line_length + x
+// 			* (data->img.bits_per_pixel / 8));
+// 	*(unsigned int *)dst = color;
+// }
 
 void	cleanup_and_exit(t_game *game, int exit_code)
 {
-	if (game->img.img_ptr)
-		mlx_destroy_image(game->mlx_connection, game->img.img_ptr);
+	if (game->img.img)
+		mlx_destroy_image(game->mlx_connection, game->img.img);
 	if (game->win_window)
 		mlx_destroy_window(game->mlx_connection, game->win_window);
 	if (game->mlx_connection)
