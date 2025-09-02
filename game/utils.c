@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:32:45 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/28 17:18:53 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:23:20 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	handle_keypress(int keycode, t_game *game)
 		game->player.turn_dir = -1;
 	else if (keycode == RIGHT_ARROW)
 		game->player.turn_dir = 1;
+	// draw(game);
 	return (0);
 }
 
@@ -41,6 +42,7 @@ int	handle_keyrelease(int keycode, t_game *game)
 		game->player.strafe_dir = 0;
 	else if (keycode == LEFT_ARROW || keycode == RIGHT_ARROW)
 		game->player.turn_dir = 0;
+	// draw(game);
 	return (0);
 }
 

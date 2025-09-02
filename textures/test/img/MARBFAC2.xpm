@@ -3,7 +3,7 @@ static char *_3f8c3d6ca6d4385cc3dc8d41b5f1f5cKoKUDZGhm6EmCKbA[] = {
 /* columns rows colors chars-per-pixel */
 "128 128 72 1 ",
 "  c #53573B",
-". c #474F33",
+". c #FF0000",
 "X c #3F472B",
 "o c #5B6347",
 "O c #373F27",
@@ -75,8 +75,8 @@ static char *_3f8c3d6ca6d4385cc3dc8d41b5f1f5cKoKUDZGhm6EmCKbA[] = {
 "I c #4F3B23",
 "U c #13230B",
 /* pixels */
-"#                            o                 e                  e  e     ee    o ee            e e   e                        ",
-"#.@@@o7ooo  oooeoo@ooo@@@@@@@@@@7@ooo@@o@o@@@o@oooooooooooojolllllllljjloooo  oooo   lllj oo   oo  j jlooooooooooooo oooooooolo#",
+"................................................................................................................................",
+"................................................................................................................................",
 "#X @@ o..O&&OOOOXX+ X $+$$@@+$++++o@ o$+..$+o+o +.ovXo Xod.X kkiiiX1X888do.O&&O.XO eO  XX+.XO88iXXXi8kj+XX o   XXOO. ...XOXo..&#",
 "#Oo@oo  .X&OOXXOXX XXX$++$7+$$++oro+ o++ooo o+@   +. oX  .XXXk1kkkkkX.X&O.XOOOX..  OXoXX&.....XOX...Xk. ..oooXOOOOOoX  XOOO  O&#",
 "#.*ooo@@ XXOX.X0X.XXX .+$+++++o..  ..o$o$+oo@+@7ioo$@  ..8&&v888kOttO. a.X8OXX.  o+OXee..o .   .. o X&1o    .OOOOOO..ooo.8OOXO4%",
@@ -201,6 +201,6 @@ static char *_3f8c3d6ca6d4385cc3dc8d41b5f1f5cKoKUDZGhm6EmCKbA[] = {
 "#.@o+oo oo  ,0vXX0, o@oo .O#O . o+o .O. XOXX ..o@@@@o@+@+++ . o.X +o+o  . @+o@oo@@+.XXO . o++o@  O&XXXXX. o@o.Ok1kX.X ooooooooX#",
 "#.oo@ooo o pp0XOOp, ooo .##X oooo@o  O  XXXXX.. o@+@++ooo++ .X .kk.o+o++.. @+o  .@@.OO ....o+o@ .OOnOO.. o@@o.X&=.XXO.oo ooo@+X%",
 "#. @+oooo 0g&0Ovv oooo .#O.o+++oo++o .o XXX.X... oo@@@ooo@@ .XXOtti@X+ .XX o+ .X.+oXt&.  kk.+oo.&=nOn4.@@@@@o.X===U&XX.o oo o+O%",
-"#.&&&&&&#44%u%uu#&&&&&##%#&&&&&&&&&&&##&########&#&&&&&&########ff##&###u#&####&#&#f9f######&&##%u%##u#&&&&&####%uuu%%###&&#&#&%",
-"%%%%%%%%%uuuuuu%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%uu%uu%%%%%%%%%%%%99%%%%%%%%%%%%%%%%%%%%%%%%%%%uufu%%%%%%%%%%u"
+"................................................................................................................................",
+"................................................................................................................................"
 };

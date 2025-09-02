@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:38:33 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/28 18:55:32 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/02 21:21:11 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ void my_mlx_pixel_put(t_game *data, int x, int y, unsigned int color)
     dst[0] = color & 0xFF;
     dst[1] = (color >> 8) & 0xFF;
     dst[2] = (color >> 16) & 0xFF;
-    if (bytes == 4)
-        dst[3] = (color >> 24) & 0xFF; 
+    // if (bytes == 4)
+    //     dst[3] = (color >> 24) & 0xFF; 
 }
 
 unsigned int get_texture_pixel(t_tex *texture, int x, int y)
@@ -126,50 +126,99 @@ int calculate_tex_x(t_ray ray, t_tex *texture)
     wall_hit_y = ray.wall_hit_y;
     
     if (ray.was_hit_vertical)
-        offset = wall_hit_y - floor(wall_hit_y);
+        offset = fmod(wall_hit_y, 64);
     else
-        offset = wall_hit_x - floor(wall_hit_x);
+        offset = fmod(wall_hit_x, 64);
+    double image_scale = (double)texture->height / 64;
+    tex_x = offset * image_scale;
     
-    tex_x = (int)(offset * texture->width);
+    // printf("ray.was_hit_vertical [%d]\n", ray.was_hit_vertical);
+    // printf("offset               [%f]\n", offset);
+    // printf("tex_x                [%d]\n", tex_x);
+    // printf("-------------------------\n");   
+    //tex_x = (int)(offset * texture->width);
     if (tex_x >= texture->width)
         tex_x = texture->width - 1;
     if (tex_x < 0)
         tex_x = 0;
-    
-    if (ray.was_hit_vertical && ray.is_facing_left)
-        tex_x = texture->width - tex_x - 1;
-    if (!ray.was_hit_vertical && ray.is_facing_up)
+    // if (ray.was_hit_vertical && ray.is_facing_left)
+    //     tex_x = texture->width - tex_x - 1; 
+    if (!ray.was_hit_vertical && ray.is_facing_down)
         tex_x = texture->width - tex_x - 1;
         
     return tex_x;
 }
 
-void rec(t_game *game, int screen_x, int wall_start_y, int wall_height, t_tex *texture)
+void rec(t_game *game, int screen_x, int wall_start_y, int wall_height, t_tex *texture) 
 {
     if (screen_x < 0 || screen_x >= game->width)
         return;
     if (wall_start_y >= game->height || wall_height <= 0)
         return;
-    
-    int tex_x = calculate_tex_x(game->rays[screen_x], texture);
-
-    int wall_end_y = wall_start_y + wall_height;
-    int screen_y = wall_start_y;
-
-    while (screen_y < wall_end_y)
-    {
-        int wall_pixel = screen_y - wall_start_y;
-        int tex_y = (wall_pixel * texture->height) / wall_height;
-        if (tex_y >= texture->height)
-            tex_y = texture->height - 1;
-        if (tex_y < 0)
-            tex_y = 0;
         
-        unsigned color = get_texture_pixel(texture, tex_x, tex_y);
-        my_mlx_pixel_put(game, screen_x, screen_y, color);
-        screen_y++;
+    int tex_x = calculate_tex_x(game->rays[screen_x], texture);
+    int screen_y = (game->height / 2) - (wall_height / 2);
+    int end = (game->height / 2) + (wall_height / 2);
+    double j = 0;
+    double scale = (double)wall_height / texture->height;
+    if (screen_y < 0 || end > game->height)
+    {
+        screen_y = 0;
+        end = game->height;
+        j = ((wall_height / 2) - (game->height / 2)) / scale;
     }
+
+    while (screen_y < end)
+    { 
+        unsigned color = get_texture_pixel(texture, tex_x, j);
+        my_mlx_pixel_put(game, screen_x, screen_y, color);
+        j += 1 / scale;
+        screen_y++;
+        //printf("j ------------> %f scale -----------> %f\n",j , scale);
+    }
+    
 }
+
+// void rec(t_game *game, int screen_x, int wall_start_y, int wall_height, t_tex *texture)
+// {
+//     float scale = 0;
+//     float x = 0;
+    
+//     if (screen_x < 0 || screen_x >= game->width)
+//         return;
+//     if (wall_start_y >= game->height || wall_height <= 0)
+//         return;
+    
+//     int tex_x = calculate_tex_x(game->rays[screen_x], texture);
+//     int wall_end_y = wall_start_y + wall_height;
+//     int screen_y = wall_start_y;
+
+//     double  image_scale;
+//     double j = 0;
+//     double offset = 0;
+//     if (wall_height > game->height)
+//     {
+// 		screen_y = 0;
+//         wall_end_y = game->height;        
+//         image_scale = (double)wall_height / texture->height;
+//         offset = (double)1 / image_scale;
+//     }
+
+
+//     while (screen_y < wall_end_y)
+//     {
+//         int wall_pixel = screen_y - wall_start_y;
+//         int tex_y = (wall_pixel * texture->height) / wall_height;
+//         if (tex_y >= texture->height)
+//             tex_y = texture->height - 1;
+//         if (tex_y < 0)
+//             tex_y = 0;
+        
+//         unsigned color = get_texture_pixel(texture, tex_x, tex_y);
+//         my_mlx_pixel_put(game, screen_x, screen_y, color);
+//         screen_y++;
+//     }
+// }
 
 void render_3d_walls(t_game *game)
 {
@@ -191,11 +240,8 @@ void render_3d_walls(t_game *game)
 		y_start = (game->height / 2) - (proj_wall_h / 2);
 		if (y_start < 0)
 			y_start = 0;
-		if ((wall_height + y_start) > game->height)
-			wall_height = game->height - y_start;
-		if (wall_height <= 0)
-			continue ;
-
+        if (wall_height <= 0)
+			continue ;  
         t_tex *texture = determine_wall_texture(game, game->rays[i]);
         if (texture && texture->addr)
             rec(game, i, y_start, wall_height, texture);

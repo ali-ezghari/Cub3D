@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:06:26 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/28 18:56:56 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/02 17:23:51 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_player(t_game *game, t_player *player)
 	player->turn_dir = 0;
 	player->walk_dir = 0;
 	player->strafe_dir = 0;
-	player->rotation_speed = 0.05 * (PI / 180);
+	player->rotation_speed = 0.2 * (PI / 180);
 	player->px = x * game->tile_size + game->tile_size / 2;
 	player->py = y * game->tile_size + game->tile_size / 2;
 	init_player_rotation(player, game->data->s_dir.dir);
