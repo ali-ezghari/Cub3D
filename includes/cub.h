@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/28 17:47:03 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:34:50 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@
 # include <cub.h>
 
 # define PATH_MAX 4096 
-
 # define PI 3.14159265359
-
 # define ESC_KEY 65307
 # define RIGHT_ARROW 65363
 # define LEFT_ARROW 65361
@@ -37,23 +35,7 @@
 # define A_KEY 97
 # define S_KEY 115
 # define D_KEY 100
-
-# define COLOR_RED 0xFF0000
-# define COLOR_GREEN 0x00FF00
-# define COLOR_BLUE 0x0000FF
-# define COLOR_WHITE 0xFFFFFF
-# define COLOR_BLACK 0x000000
-# define COLOR_GREY 0x808080
-
-#define COLOR_NORTH 0xFF0000   // Red
-#define COLOR_SOUTH 0x00FF00   // Green
-#define COLOR_EAST  0x0000FF   // Blue
-#define COLOR_WEST  0xFFFF00   // Yellow
-
-
-#define MIN(a, b) ((a) < (b) ? (a) : (b))
-#define MAX(a, b) ((a) > (b) ? (a) : (b))
-
+# define FAR_AWAY 10
 # define SCALE_FACTOR 0.2
 
 typedef struct s_tex 
@@ -98,36 +80,21 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-// typedef struct s_ray
-// {
-// 	double	wall_hit_x;
-// 	double	wall_hit_y;
-// 	double	distance;
-// 	int		was_hit_vertical;
-// 	double	ray_angle;
-// 	bool	is_facing_up;
-// 	bool	is_facing_down;
-// 	bool	is_facing_right;
-// 	bool	is_facing_left;
-// }			t_ray;
-
 typedef struct s_ray
 {
-    double wall_hit_x;
-    double wall_hit_y;
-    double distance;
-    int was_hit_vertical;
-    double ray_angle;
-    bool is_facing_up;
-    bool is_facing_down;
-    bool is_facing_right;
-    bool is_facing_left;
-    
-    // Add these for wall rendering optimization:
-    int wall_height;
-    int y_start;
-    t_tex *wall_texture;    // Cache the texture pointer
-    int tex_x;              // Cache the texture x coordinate
+    double	wall_hit_x;
+    double	wall_hit_y;
+    double 	distance;
+    int		was_hit_vertical;
+    double 	ray_angle;
+    bool 	is_facing_up;
+    bool 	is_facing_down;
+    bool	is_facing_right;
+    bool 	is_facing_left;
+    int 	wall_height;
+    int 	y_start;
+    t_tex 	*wall_texture; 
+    int 	tex_x;
 } t_ray;
 
 typedef struct s_player
@@ -157,12 +124,11 @@ typedef struct s_game
 	struct s_player	player;
 	struct s_img	img;
 	struct s_info	*data;
-	// sturct t_info	info;
-
-	t_tex   tex_north;
-    t_tex   tex_south;
-    t_tex   tex_east;
-    t_tex   tex_west;
+	struct s_tex    *texture;
+	t_tex   		tex_north;
+    t_tex   		tex_south;
+    t_tex  			tex_east;
+    t_tex   		tex_west;
 }					t_game;
 
 typedef struct g_help_varible
@@ -182,17 +148,16 @@ typedef struct s_day_check
 	int				checked;
 }					t_argv_check;
 
-typedef struct g_directions
+typedef struct g_didraw_walltions
 {
 	char			no[PATH_MAX];
 	char			so[PATH_MAX];
 	char			we[PATH_MAX];
 	char			ea[PATH_MAX];
-}					t_directions;
+}					t_didraw_walltions;
 
 typedef struct g_color_data
 {
-	// char			*hexa_color;
 	int				num_color;
 	int				_rgb[3];
 }					t_color_data;
@@ -212,14 +177,13 @@ typedef struct g_start_dir
 
 typedef struct s_info
 {
-	t_directions	dir;
+	t_didraw_walltions	dir;
 	t_color			color;
 	t_start_dir		s_dir;
 	t_help_varible	*v;
 	char			**map;
 	int				map_width;
 	int				map_length;
-
 }					t_info;
 
 /* parser_utils */
@@ -236,7 +200,7 @@ char				**copy_array(char **original, int rows);
 int					skip_prefix(char *line);
 int					parse_line(char *line, t_argv_check *argvs,
 						t_info *data);
-void				init_directions(char *line, char *dir, t_info *data);
+void				init_didraw_walltions(char *line, char *dir, t_info *data);
 void				init_color(char *line, t_color_data *color,
 						t_info *data);
 void				validate_and_set_rgb(char **rgb, t_color_data *color,
@@ -257,9 +221,6 @@ int					is_all_checked(t_argv_check *map_argv);
 int					ft_notmemchar(const char *str, char c, int count_sp);
 char				**copy_array(char **original, int rows);
 
-// /* parser */
-// void exit_error(int status, char *message, t_info *data);
-
 /* parser_utils_three */
 int					is_valid_name_file(char *argv);
 void				exit_error(int status, char *message, t_info *data);
@@ -269,15 +230,12 @@ void				replace_char_in_array(char **arr, char tar, char rep);
 char				*skip_empty_lines(int fd, char *line);
 
 // game functions 
-
 bool				find_vert_wall_hit(t_game *game, t_ray *ray, t_vert *v);
 void				init_vert_ray(t_game *game, t_player *player,
 						t_ray *ray, t_vert *v);
 void				init_horz_ray(t_game *game, t_player *player,
 						t_ray *ray, t_horz *h);
 bool				find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h);
-
-// void				my_mlx_pixel_put(t_game *data, int x, int y, int color);
 void				my_mlx_pixel_put(t_game *data, int x, int y, unsigned int color);
 double				normalize_angle(double angle);
 int					has_wall_at(t_game *game, int x, int y);
@@ -285,17 +243,21 @@ double				_2points_dist(double x0, double y0, double x1, double y1);
 int					handle_keypress(int keycode, t_game *game);
 int					handle_keyrelease(int keycode, t_game *game);
 int					draw(t_game *game);
-
 void				raycasting(t_game *game, t_player *player);
 void				init_ray(t_ray *ray, double ray_angle);
-
 void				cleanup_and_exit(t_game *game, int exit_code);
-
 void				update(t_game *game, t_player *player);
 void				init_player(t_game *game, t_player *player);
 void				init_game(t_game *game);
 void				init_mlx(t_game *game);
 void 				render_wall_column(t_game *game, int x, int y, int height, t_tex *texture, int tex_x);
-void 				load_textures(t_game *game);
+int 				load_textures(t_game *game);
+
+/* texture_mapping */
+void				draw_wall(t_game *game, int screen_x, int wall_start_y, int wall_height);
+int					calculate_tex_x(t_ray ray, t_tex *texture);
+unsigned int		get_texture_pixel(t_tex *texture, int x, int y);
+void				my_mlx_pixel_put(t_game *data, int x, int y, unsigned int color);
+t_tex 				*determine_wall_texture(t_game *game, t_ray ray);
 
 #endif

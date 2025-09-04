@@ -1,9 +1,9 @@
    C  67, 77, 77
    F     140, 130, 130
-WE ./maps/path_to_the_south_texture
-  NO                                  ./maps/path_to_the_south_texture
-EA ./maps/path_to_the_south_texture
-SO ./maps/path_to_the_south_texture
+NO ./textures/test/img/MARBFAC2.xpm
+SO ./textures/test/south1.xpm
+WE ./textures/test/west.xpm
+EA ./textures/test/east.xpm
 
 
 111111111111111111111111111111111111111111111111

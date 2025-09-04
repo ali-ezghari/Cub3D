@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:38:19 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/02 17:23:03 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:29:46 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	main(int argc, char *argv[])
 	init_game(&game);
 	init_mlx(&game);
 	init_player(&game, &game.player);
-	load_textures(&game);
+	if (load_textures(&game) == 1)
+		exit_error(EXIT_FAILURE, "Failed to load one fo texture\n", game.data);
 	mlx_hook(game.win_window, 2, 1L << 0, handle_keypress, &game);
 	mlx_hook(game.win_window, 3, 1L << 1, handle_keyrelease, &game);
 	mlx_hook(game.win_window, 17, 0, handle_destroy, &game);

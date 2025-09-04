@@ -6,13 +6,13 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:49:10 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/08/20 18:38:48 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/03 10:44:36 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	init_directions(char *line, char *dir, t_info *data)
+void	init_didraw_walltions(char *line, char *dir, t_info *data)
 {
 	int		fd;
 	char	*tmp;
@@ -88,16 +88,16 @@ void	init_color(char *line, t_color_data *color, t_info *data)
 int	parse_line(char *line, t_argv_check *argvs, t_info *data)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		return (argvs[0].checked = 1, init_directions(line, data->dir.no, data),
+		return (argvs[0].checked = 1, init_didraw_walltions(line, data->dir.no, data),
 			0);
 	if (ft_strncmp(line, "SO ", 3) == 0)
-		return (argvs[1].checked = 1, init_directions(line, data->dir.so, data),
+		return (argvs[1].checked = 1, init_didraw_walltions(line, data->dir.so, data),
 			0);
 	if (ft_strncmp(line, "WE ", 3) == 0)
-		return (argvs[2].checked = 1, init_directions(line, data->dir.we, data),
+		return (argvs[2].checked = 1, init_didraw_walltions(line, data->dir.we, data),
 			0);
 	if (ft_strncmp(line, "EA ", 3) == 0)
-		return (argvs[3].checked = 1, init_directions(line, data->dir.ea, data),
+		return (argvs[3].checked = 1, init_didraw_walltions(line, data->dir.ea, data),
 			0);
 	if (ft_strncmp(line, "F ", 2) == 0)
 		return (argvs[4].checked = 1, init_color(line, &data->color.floor,

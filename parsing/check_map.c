@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:47:20 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/08/14 15:39:58 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/03 10:44:36 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	validate_char(char c, int *dir_set, t_info *data)
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (*dir_set)
-			exit_error(2, "Invalid map: only one direction allowed.\n", data);
+			exit_error(2, "Invalid map: only one didraw_walltion allowed.\n", data);
 		data->s_dir.dir = c;
 		data->s_dir.x = data->v->i;
 		data->s_dir.y = data->v->j;
