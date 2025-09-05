@@ -6,11 +6,36 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:51:17 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/08/20 18:31:31 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:17:15 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
+
+int	is_valid_color_struct(char *line)
+{
+	int	comma_count;
+	int	color_count;
+	int	i;
+
+	comma_count = 0;
+	color_count = 0;
+	i = 0;
+	while (line[i])
+	{
+		if (i == 0 && line[i] == ',')
+			return (0);
+		while (line[i] && ft_isdigit(line[i]))
+			i++;
+		color_count++;
+		if (line[i] && line[i] == ',')
+			comma_count++;
+		i++;
+	}
+	if ((comma_count != 2) || (color_count != 3))
+		return (0);
+	return (1);
+}
 
 void	init_argvs(t_argv_check *argvs)
 {
@@ -51,7 +76,7 @@ int	init_data(int fd, t_info *data, int total_map_lines)
 			line++;
 		status = parse_line(line, argvs, data);
 		if (status == 1)
-		return (free(tmp), 1);
+			return (free(tmp), 1);
 		if (status == 2)
 		{
 			free(tmp);
@@ -70,7 +95,6 @@ int	parser(int argc, char *file, t_info *data)
 	int		fd_count;
 	int		map_lines;
 	int		total_len;
-	char	**map_copy;
 
 	if (argc != 2)
 		exit_error(1, "Invalid number of arguments.\n", data);
@@ -84,9 +108,9 @@ int	parser(int argc, char *file, t_info *data)
 	if (init_data(fd, data, map_lines))
 		exit_error(2, "Invalid file content.\n", data);
 	total_len = total_lines(data->map);
-	map_copy = copy_array(data->map, total_len);
-	check_if_map_valid(map_copy, total_len, data);
+	data->map_copy = copy_array(data->map, total_len);
+	check_if_map_valid(total_len, data);
 	replace_char_in_array(data->map, ' ', '1');
-	free_str_array(map_copy);
+	free_str_array(data->map_copy);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:47:20 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/03 10:44:36 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/04 21:57:24 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,16 @@ void	validate_border(char *line, t_info *data)
 		exit_error(2, "First and last lines must contain only '1'.\n", data);
 }
 
-void	validate_char(char c, int *dir_set, t_info *data)
+void	validate_char(int i, int j, int *dir_set, t_info *data)
 {
+	char	c;
+
+	c = data->map_copy[i][j];
 	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
 	{
 		if (*dir_set)
-			exit_error(2, "Invalid map: only one didraw_walltion allowed.\n", data);
+			exit_error(2, "Invalid map: only one didraw_walltion allowed.\n",
+				data);
 		data->s_dir.dir = c;
 		data->s_dir.x = data->v->i;
 		data->s_dir.y = data->v->j;
@@ -58,35 +62,34 @@ int	find_position(char **map, char target, int *x, int *y)
 	return (0);
 }
 
-void	flood_fill(t_info *data, char **map, char target, int x, int y)
+void	flood_fill(t_info *data, char target, int x, int y)
 {
-	if (map[x][y] == '\0' || map[x][y] == ' ')
+	if (data->map_copy[x][y] == '\0' || data->map_copy[x][y] == ' ')
 		exit_error(2, "Invalid map: map must be surrounded by walls.\n", data);
-	if (map[x][y] == target)
+	if (data->map_copy[x][y] == target)
 	{
-		map[x][y] = 'x';
-		flood_fill(data, map, target, x + 1, y);
-		flood_fill(data, map, target, x - 1, y);
-		flood_fill(data, map, target, x, y + 1);
-		flood_fill(data, map, target, x, y - 1);
+		data->map_copy[x][y] = 'x';
+		flood_fill(data, target, x + 1, y);
+		flood_fill(data, target, x - 1, y);
+		flood_fill(data, target, x, y + 1);
+		flood_fill(data, target, x, y - 1);
 	}
 }
 
-void	check_if_map_valid(char **map, int len, t_info *data)
+void	check_if_map_valid(int len, t_info *data)
 {
 	data->v = malloc(sizeof(t_help_varible));
 	if (!data->v)
 		exit_error(1, "Memory allocation failed\n", data);
 	ft_memset(data->v, 0, sizeof(t_help_varible));
-	data->s_dir.dir = '\0';
-	while (map[data->v->i])
+	while (data->map_copy[data->v->i])
 	{
 		if (data->v->i == 0 || data->v->i == len - 1)
-			validate_border(map[data->v->i], data);
+			validate_border(data->map_copy[data->v->i], data);
 		data->v->j = 0;
-		while (map[data->v->i][data->v->j])
+		while (data->map_copy[data->v->i][data->v->j])
 		{
-			validate_char(map[data->v->i][data->v->j], &data->v->dir_set, data);
+			validate_char(data->v->i, data->v->j, &data->v->dir_set, data);
 			data->v->j++;
 		}
 		data->v->i++;
@@ -94,9 +97,10 @@ void	check_if_map_valid(char **map, int len, t_info *data)
 	if (!data->v->dir_set)
 		exit_error(2, "Invalid map: add player's start position.\n", data);
 	data->v->next = data->s_dir.dir;
-	while (find_position(map, data->v->next, &data->v->x, &data->v->y))
+	while (find_position(data->map_copy,
+			data->v->next, &data->v->x, &data->v->y))
 	{
-		flood_fill(data, map, data->v->next, data->v->x, data->v->y);
+		flood_fill(data, data->v->next, data->v->x, data->v->y);
 		data->v->next = '0';
 	}
 }

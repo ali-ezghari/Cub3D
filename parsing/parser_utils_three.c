@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:50:39 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/04 18:01:23 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/04 21:03:33 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	exit_error(int status, char *message, t_info *data)
 		write(status, "Error: \n", 8);
 		write(status, message, ft_strlen(message));
 	}
-    if (status != -1)
-        exit(status);
+	if (status != -1)
+		exit (status);
 }
 
 void	read_map(int fd, t_info *data, int total_map_lines, char *line)

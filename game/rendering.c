@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:38:33 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/04 18:18:09 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/04 22:10:11 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,38 +54,37 @@ static void	ft_clear(t_game *game, int width, int height)
 		pixels[i++] = game->data->color.floor.num_color;
 }
 
-void render_3d_walls(t_game *game)
+void	render_3d_walls(t_game *game)
 {
-    double proj_wall_h;
-    double wall_height;
-    double corr_distance;
-    int y_start;
-    int i;
-    
+	double	proj_wall_h;
+	double	wall_height;
+	double	corr_distance;
+	int		y_start;
+	int		i;
+
 	i = 0;
 	while (i < game->width)
 	{
-		corr_distance = game->rays[i].distance
-			* cos(game->rays[i].ray_angle - game->player.rotation_angle);
-		proj_wall_h = (game->tile_size / corr_distance)
-			* game->distance_to_pl;
+		corr_distance = game->rays[i].distance * cos(game->rays[i].ray_angle
+				- game->player.rotation_angle);
+		proj_wall_h = (game->tile_size / corr_distance) * game->distance_to_pl;
 		wall_height = (int)proj_wall_h;
 		y_start = (game->height / 2) - (proj_wall_h / 2);
 		if (y_start < 0)
 			y_start = 0;
-        if (wall_height <= 0)
-			continue ; 
-        game->texture = determine_wall_texture(game, game->rays[i]);
-        if (game->texture && game->texture->addr)
-            draw_wall(game, i, y_start, wall_height);
-        i++;
+		if (wall_height <= 0)
+			continue ;
+		game->texture = determine_wall_texture(game, game->rays[i]);
+		if (game->texture && game->texture->addr)
+			draw_wall(game, i, y_start, wall_height);
+		i++;
 	}
 }
 
 int	draw(t_game *game)
 {
-    if (!game)
-        return (-1);
+	if (!game)
+		return (-1);
 	ft_clear(game, game->width, game->height);
 	update(game, &game->player);
 	raycasting(game, &game->player);

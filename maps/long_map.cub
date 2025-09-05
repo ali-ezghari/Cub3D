@@ -1,10 +1,10 @@
    C  67, 77, 77
    F     140, 130, 130
-NO ./textures/test/img/MARBFAC2.xpm
-SO ./textures/test/south1.xpm
-WE ./textures/test/west.xpm
-EA ./textures/test/east.xpm
 
+NO ./textures/dir_tex/north.xpm
+SO ./textures/dir_tex/south.xpm
+WE ./textures/dir_tex/west.xpm
+EA ./textures/dir_tex/east.xpm
 
 111111111111111111111111111111111111111111111111
 100000000000000000000000000000000000000000000001

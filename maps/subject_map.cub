@@ -1,10 +1,10 @@
-NO ./textures/test/img/MARBFAC2.xpm
-SO ./textures/test/south1.xpm
-WE ./textures/test/west.xpm
-EA ./textures/test/west.xpm
+NO ./textures/dir_tex/north.xpm
+SO ./textures/dir_tex/south.xpm
+WE ./textures/dir_tex/west.xpm
+EA ./textures/dir_tex/east.xpm
 
-F 250,250,200
-C 119,119,100
+F 200,22,3
+C 119,11,100
 
         1111111111111111111111111
         1000000000110000000000001

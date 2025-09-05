@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 16:49:10 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/03 10:44:36 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:16:58 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	init_color(char *line, t_color_data *color, t_info *data)
 	if (line && line[ft_strlen(line) - 1] == '\n')
 		line[ft_strlen(line) - 1] = '\0';
 	i = skip_prefix(line);
+	if (!is_valid_color_struct(line + i))
+		exit_error(2, "Invalid color struct [R,G,B]\n", data);
 	rgb = ft_split(line + i, ',');
 	if (!rgb)
 		exit_error(2, "Memory allocation error\n", data);
@@ -88,23 +90,23 @@ void	init_color(char *line, t_color_data *color, t_info *data)
 int	parse_line(char *line, t_argv_check *argvs, t_info *data)
 {
 	if (ft_strncmp(line, "NO ", 3) == 0)
-		return (argvs[0].checked = 1, init_didraw_walltions(line, data->dir.no, data),
-			0);
+		return (argvs[0].checked = 1,
+			init_didraw_walltions(line, data->dir.no, data), 0);
 	if (ft_strncmp(line, "SO ", 3) == 0)
-		return (argvs[1].checked = 1, init_didraw_walltions(line, data->dir.so, data),
-			0);
+		return (argvs[1].checked = 1,
+			init_didraw_walltions(line, data->dir.so, data), 0);
 	if (ft_strncmp(line, "WE ", 3) == 0)
-		return (argvs[2].checked = 1, init_didraw_walltions(line, data->dir.we, data),
-			0);
+		return (argvs[2].checked = 1,
+			init_didraw_walltions(line, data->dir.we, data), 0);
 	if (ft_strncmp(line, "EA ", 3) == 0)
-		return (argvs[3].checked = 1, init_didraw_walltions(line, data->dir.ea, data),
-			0);
+		return (argvs[3].checked = 1,
+			init_didraw_walltions(line, data->dir.ea, data), 0);
 	if (ft_strncmp(line, "F ", 2) == 0)
-		return (argvs[4].checked = 1, init_color(line, &data->color.floor,
-				data), 0);
+		return (argvs[4].checked = 1,
+			init_color(line, &data->color.floor, data), 0);
 	if (ft_strncmp(line, "C ", 2) == 0)
-		return (argvs[5].checked = 1, init_color(line, &data->color.ceil, data),
-			0);
+		return (argvs[5].checked = 1,
+			init_color(line, &data->color.ceil, data), 0);
 	if (line[0] == '\0' || ft_strncmp(line, "\n", 1) == 0
 		|| ft_is_all_spaces(line))
 		return (2);
