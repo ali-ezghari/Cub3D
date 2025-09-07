@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aezghari <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:29:23 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/19 21:29:56 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:26:04 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-void	init_horz_ray(t_game *game, t_player *player, t_ray *ray, t_horz *h)
+void	init_horz_ray(t_player *player, t_ray *ray, t_horz *h)
 {
-	h->y_intercept = floor(player->py / game->tile_size) * game->tile_size;
+	h->y_intercept = floor(player->py / TILE_SIZE) * TILE_SIZE;
 	if (ray->is_facing_down)
-		h->y_intercept += game->tile_size;
+		h->y_intercept += TILE_SIZE;
 	h->x_intercept = player->px + (h->y_intercept - player->py)
 		/ tan(ray->ray_angle);
-	h->step_y = game->tile_size;
+	h->step_y = TILE_SIZE;
 	if (ray->is_facing_up)
 		h->step_y *= -1;
-	h->step_x = game->tile_size / tan(ray->ray_angle);
+	h->step_x = TILE_SIZE / tan(ray->ray_angle);
 	if (ray->is_facing_left && h->step_x > 0)
 		h->step_x *= -1;
 	if (ray->is_facing_right && h->step_x < 0)
@@ -38,8 +38,8 @@ bool	find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h)
 	h->next_y = h->y_intercept;
 	while (1)
 	{
-		map_x = (int)(h->next_x / game->tile_size);
-		map_y = (int)(h->next_y / game->tile_size);
+		map_x = (int)(h->next_x / TILE_SIZE);
+		map_y = (int)(h->next_y / TILE_SIZE);
 		if (map_x < 0 || map_y < 0 || map_x >= game->map_cols
 			|| map_y >= game->map_rows)
 			return (false);
@@ -53,17 +53,17 @@ bool	find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h)
 	}
 }
 
-void	init_vert_ray(t_game *game, t_player *player, t_ray *ray, t_vert *v)
+void	init_vert_ray(t_player *player, t_ray *ray, t_vert *v)
 {
-	v->x_intercept = floor(player->px / game->tile_size) * game->tile_size;
+	v->x_intercept = floor(player->px / TILE_SIZE) * TILE_SIZE;
 	if (ray->is_facing_right)
-		v->x_intercept += game->tile_size;
+		v->x_intercept += TILE_SIZE;
 	v->y_intercept = player->py + (v->x_intercept - player->px)
 		* tan(ray->ray_angle);
-	v->step_x = game->tile_size;
+	v->step_x = TILE_SIZE;
 	if (ray->is_facing_left)
 		v->step_x *= -1;
-	v->step_y = game->tile_size * tan(ray->ray_angle);
+	v->step_y = TILE_SIZE * tan(ray->ray_angle);
 	if (ray->is_facing_up && v->step_y > 0)
 		v->step_y *= -1;
 	if (ray->is_facing_down && v->step_y < 0)
@@ -79,8 +79,8 @@ bool	find_vert_wall_hit(t_game *game, t_ray *ray, t_vert *v)
 	v->next_y = v->y_intercept;
 	while (1)
 	{
-		map_x = (int)(v->next_x / game->tile_size);
-		map_y = (int)(v->next_y / game->tile_size);
+		map_x = (int)(v->next_x / TILE_SIZE);
+		map_y = (int)(v->next_y / TILE_SIZE);
 		if (map_x < 0 || map_y < 0 || map_x >= game->map_cols
 			|| map_y >= game->map_rows)
 			return (false);

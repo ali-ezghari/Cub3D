@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:21:56 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/04 22:15:32 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/07 16:06:38 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,21 +67,22 @@ int	calculate_tex_x(t_ray ray, t_tex *texture)
 	wall_hit_x = ray.wall_hit_x;
 	wall_hit_y = ray.wall_hit_y;
 	if (ray.was_hit_vertical)
-		offset = fmod(wall_hit_y, 64);
+		offset = fmod(wall_hit_y, TILE_SIZE);
 	else
-		offset = fmod(wall_hit_x, 64);
-	image_scale = (double)texture->height / 64;
+		offset = fmod(wall_hit_x, TILE_SIZE);
+	image_scale = (double)texture->height / TILE_SIZE;
 	tex_x = offset * image_scale;
 	if (tex_x >= texture->width)
 		tex_x = texture->width - 1;
 	if (tex_x < 0)
 		tex_x = 0;
-	if (!ray.was_hit_vertical && ray.is_facing_down)
+	if ((!ray.was_hit_vertical && ray.is_facing_down)
+		|| (ray.was_hit_vertical && ray.is_facing_left))
 		tex_x = texture->width - tex_x - 1;
 	return (tex_x);
 }
 
-void	draw_wall(t_game *game, int screen_x, int wall_start_y, int wall_height)
+void	draw_wall(t_game *game, int screen_x, int wall_height)
 {
 	double			tex_y;
 	double			scale;

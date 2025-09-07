@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/05 11:15:42 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/06 17:15:18 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@
 # define D_KEY 100
 # define FAR_AWAY 10
 # define SCALE_FACTOR 0.2
+# define TILE_SIZE 64
 
 typedef struct s_tex
 {
@@ -119,7 +120,6 @@ typedef struct s_game
 	int					map_rows;
 	int					map_cols;
 	double				fov_angle;
-	int					tile_size;
 	struct s_ray		*rays;
 	struct s_player		player;
 	struct s_img		img;
@@ -233,10 +233,8 @@ char					*skip_empty_lines(int fd, char *line);
 
 // game functions
 bool					find_vert_wall_hit(t_game *game, t_ray *ray, t_vert *v);
-void					init_vert_ray(t_game *game, t_player *player,
-							t_ray *ray, t_vert *v);
-void					init_horz_ray(t_game *game, t_player *player,
-							t_ray *ray, t_horz *h);
+void					init_vert_ray(t_player *player, t_ray *ray, t_vert *v);
+void					init_horz_ray(t_player *player, t_ray *ray, t_horz *h);
 bool					find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h);
 void					my_mlx_pixel_put(t_game *data, int x, int y,
 							unsigned int color);
@@ -258,8 +256,7 @@ int						load_textures(t_game *game);
 void					gets_data_addr_of_current_image(t_game *game);
 
 /* texture_mapping */
-void					draw_wall(t_game *game, int screen_x, int wall_start_y,
-							int wall_height);
+void					draw_wall(t_game *game, int screen_x, int wall_height);
 int						calculate_tex_x(t_ray ray, t_tex *texture);
 unsigned int			get_texture_pixel(t_tex *texture, int x, int y);
 void					my_mlx_pixel_put(t_game *data, int x, int y,

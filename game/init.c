@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:06:26 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/02 17:23:51 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/06 12:01:08 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	init_player(t_game *game, t_player *player)
 	player->walk_dir = 0;
 	player->strafe_dir = 0;
 	player->rotation_speed = 0.2 * (PI / 180);
-	player->px = x * game->tile_size + game->tile_size / 2;
-	player->py = y * game->tile_size + game->tile_size / 2;
+	player->px = x * TILE_SIZE + TILE_SIZE / 2;
+	player->py = y * TILE_SIZE + TILE_SIZE / 2;
 	init_player_rotation(player, game->data->s_dir.dir);
 }
 
@@ -62,7 +62,6 @@ void	init_game(t_game *game)
 	game->map_rows = game->data->map_length;
 	game->map_cols = game->data->map_width;
 	game->fov_angle = 60 * (PI / 180);
-	game->tile_size = 64;
 	game->distance_to_pl = (game->width / 2) / tan(game->fov_angle / 2);
 	game->mlx_connection = NULL;
 	game->win_window = NULL;

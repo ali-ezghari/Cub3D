@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:31:47 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/05 10:18:56 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/06 12:00:07 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	has_wall_at(t_game *game, int x, int y)
 	int	map_x;
 	int	map_y;
 
-	map_x = x / game->tile_size;
-	map_y = y / game->tile_size;
+	map_x = x / TILE_SIZE;
+	map_y = y / TILE_SIZE;
 	if (map_x < 0 || map_x >= game->map_cols || map_y < 0
 		|| map_y >= game->map_rows)
 		return (1);

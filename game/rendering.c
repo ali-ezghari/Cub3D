@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:38:33 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/04 22:10:11 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:21:52 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	render_3d_walls(t_game *game)
 	{
 		corr_distance = game->rays[i].distance * cos(game->rays[i].ray_angle
 				- game->player.rotation_angle);
-		proj_wall_h = (game->tile_size / corr_distance) * game->distance_to_pl;
+		proj_wall_h = (TILE_SIZE / corr_distance) * game->distance_to_pl;
 		wall_height = (int)proj_wall_h;
 		y_start = (game->height / 2) - (proj_wall_h / 2);
 		if (y_start < 0)
@@ -76,7 +76,7 @@ void	render_3d_walls(t_game *game)
 			continue ;
 		game->texture = determine_wall_texture(game, game->rays[i]);
 		if (game->texture && game->texture->addr)
-			draw_wall(game, i, y_start, wall_height);
+			draw_wall(game, i, wall_height);
 		i++;
 	}
 }

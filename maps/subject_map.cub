@@ -3,8 +3,10 @@ SO ./textures/dir_tex/south.xpm
 WE ./textures/dir_tex/west.xpm
 EA ./textures/dir_tex/east.xpm
 
-F 200,22,3
-C 119,11,100
+C 80,199,199
+F 145,80,199
+
+
 
         1111111111111111111111111
         1000000000110000000000001

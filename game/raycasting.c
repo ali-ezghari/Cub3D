@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:09:32 by aezghari          #+#    #+#             */
-/*   Updated: 2025/08/22 18:54:59 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/06 15:26:56 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ static void	cast_ray(t_game *game, t_player *player, t_ray *ray)
 
 	memset(&h, 0, sizeof(t_horz));
 	memset(&v, 0, sizeof(t_vert));
-	init_horz_ray(game, player, ray, &h);
+	init_horz_ray(player, ray, &h);
 	h.found = find_horz_wall_hit(game, ray, &h);
-	init_vert_ray(game, player, ray, &v);
+	init_vert_ray(player, ray, &v);
 	v.found = find_vert_wall_hit(game, ray, &v);
 	set_ray_result(ray, &h, &v, player);
 }
