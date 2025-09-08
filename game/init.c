@@ -45,7 +45,7 @@ void	init_player(t_game *game, t_player *player)
 
 	x = game->data->s_dir.y;
 	y = game->data->s_dir.x;
-	player->move_speed = 0.2;
+	player->move_speed = 0.3;
 	player->turn_dir = 0;
 	player->walk_dir = 0;
 	player->strafe_dir = 0;
@@ -57,8 +57,8 @@ void	init_player(t_game *game, t_player *player)
 
 void	init_game(t_game *game)
 {
-	game->width = 800;
-	game->height = 800;
+	game->width = 1200;
+	game->height = 1200;
 	game->map_rows = game->data->map_length;
 	game->map_cols = game->data->map_width;
 	game->fov_angle = 60 * (PI / 180);

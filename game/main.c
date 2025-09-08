@@ -17,6 +17,20 @@ int	handle_destroy(t_game *game)
 	cleanup_and_exit(game, 0);
 	return (0);
 }
+int mouse_move(int x, int y, t_game *game)
+{
+	int center_x;
+	int delta_x;
+	float sens;
+
+	center_x = game->width / 2;
+	sens = 0.002;
+	delta_x = x - center_x;
+	game->player.rotation_angle += delta_x * sens;
+	mlx_mouse_move(game->mlx_connection, game->win_window, center_x, game->height / 2);
+	(void)y;
+	return (0);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -33,7 +47,9 @@ int	main(int argc, char *argv[])
 	init_mlx(&game);
 	init_player(&game, &game.player);
 	if (load_textures(&game) == 1)
-		exit_error(EXIT_FAILURE, "Failed to load one fo texture\n", game.data);
+		exit_error(EXIT_FAILURE, "Failed to load one of the textures\n", game.data);
+	mlx_mouse_hide(game.mlx_connection, game.win_window);
+	mlx_hook(game.win_window, 6, 1L << 6, mouse_move, &game);
 	mlx_hook(game.win_window, 2, 1L << 0, handle_keypress, &game);
 	mlx_hook(game.win_window, 3, 1L << 1, handle_keyrelease, &game);
 	mlx_hook(game.win_window, 17, 0, handle_destroy, &game);
