@@ -59,22 +59,22 @@ double	_2points_dist(double x1, double y1, double x2, double y2)
 
 int	load_textures(t_game *game)
 {
-	game->tex_west.img = mlx_xpm_file_to_image(game->mlx_connection,
+	game->tex_west.img = mlx_xpm_file_to_image(game->mlx,
 			game->data->dir.we, &game->tex_west.width,
 			&game->tex_west.height);
 	if (!game->tex_west.img)
 		return (1);
-	game->tex_east.img = mlx_xpm_file_to_image(game->mlx_connection,
+	game->tex_east.img = mlx_xpm_file_to_image(game->mlx,
 			game->data->dir.ea, &game->tex_east.width,
 			&game->tex_east.height);
 	if (!game->tex_east.img)
 		return (1);
-	game->tex_north.img = mlx_xpm_file_to_image(game->mlx_connection,
+	game->tex_north.img = mlx_xpm_file_to_image(game->mlx,
 			game->data->dir.no, &game->tex_north.width,
 			&game->tex_north.height);
 	if (!game->tex_north.img)
 		return (1);
-	game->tex_south.img = mlx_xpm_file_to_image(game->mlx_connection,
+	game->tex_south.img = mlx_xpm_file_to_image(game->mlx,
 			game->data->dir.so, &game->tex_south.width,
 			&game->tex_south.height);
 	if (!game->tex_south.img)

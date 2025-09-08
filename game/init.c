@@ -63,21 +63,21 @@ void	init_game(t_game *game)
 	game->map_cols = game->data->map_width;
 	game->fov_angle = 60 * (PI / 180);
 	game->distance_to_pl = (game->width / 2) / tan(game->fov_angle / 2);
-	game->mlx_connection = NULL;
-	game->win_window = NULL;
+	game->mlx = NULL;
+	game->win = NULL;
 	game->rays = NULL;
 }
 
 void	init_mlx(t_game *game)
 {
-	game->mlx_connection = mlx_init();
-	if (!game->mlx_connection)
+	game->mlx = mlx_init();
+	if (!game->mlx)
 		cleanup_and_exit(game, EXIT_FAILURE);
-	game->win_window = mlx_new_window(game->mlx_connection,
+	game->win = mlx_new_window(game->mlx,
 			game->width, game->height, "cub3d");
-	if (!game->win_window)
+	if (!game->win)
 		cleanup_and_exit(game, EXIT_FAILURE);
-	game->img.img = mlx_new_image(game->mlx_connection,
+	game->img.img = mlx_new_image(game->mlx,
 			game->width, game->height);
 	if (!game->img.img)
 		cleanup_and_exit(game, EXIT_FAILURE);

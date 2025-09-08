@@ -6,31 +6,11 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:38:19 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/04 18:29:46 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:07:34 by aezghari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
-
-int	handle_destroy(t_game *game)
-{
-	cleanup_and_exit(game, 0);
-	return (0);
-}
-int mouse_move(int x, int y, t_game *game)
-{
-	int center_x;
-	int delta_x;
-	float sens;
-
-	center_x = game->width / 2;
-	sens = 0.002;
-	delta_x = x - center_x;
-	game->player.rotation_angle += delta_x * sens;
-	mlx_mouse_move(game->mlx_connection, game->win_window, center_x, game->height / 2);
-	(void)y;
-	return (0);
-}
 
 int	main(int argc, char *argv[])
 {
@@ -47,13 +27,13 @@ int	main(int argc, char *argv[])
 	init_mlx(&game);
 	init_player(&game, &game.player);
 	if (load_textures(&game) == 1)
-		exit_error(EXIT_FAILURE, "Failed to load one of the textures\n", game.data);
-	mlx_mouse_hide(game.mlx_connection, game.win_window);
-	mlx_hook(game.win_window, 6, 1L << 6, mouse_move, &game);
-	mlx_hook(game.win_window, 2, 1L << 0, handle_keypress, &game);
-	mlx_hook(game.win_window, 3, 1L << 1, handle_keyrelease, &game);
-	mlx_hook(game.win_window, 17, 0, handle_destroy, &game);
-	mlx_loop_hook(game.mlx_connection, draw, &game);
-	mlx_loop(game.mlx_connection);
+		exit_error(1, "Failed to load one of the textures\n", game.data);
+	mlx_mouse_hide(game.mlx, game.win);
+	mlx_hook(game.win, 6, 1L << 6, mouse_move, &game);
+	mlx_hook(game.win, 2, 1L << 0, handle_keypress, &game);
+	mlx_hook(game.win, 3, 1L << 1, handle_keyrelease, &game);
+	mlx_hook(game.win, 17, 0, handle_destroy, &game);
+	mlx_loop_hook(game.mlx, draw, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }

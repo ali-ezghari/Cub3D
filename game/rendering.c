@@ -89,7 +89,7 @@ int	draw(t_game *game)
 	update(game, &game->player);
 	raycasting(game, &game->player);
 	render_3d_walls(game);
-	mlx_put_image_to_window(game->mlx_connection, game->win_window,
+	mlx_put_image_to_window(game->mlx, game->win,
 		game->img.img, 0, 0);
 	return (0);
 }

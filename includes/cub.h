@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/06 17:15:18 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/08 10:09:26 by aezghari         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ typedef struct s_player
 
 typedef struct s_game
 {
-	void				*mlx_connection;
-	void				*win_window;
+	void				*mlx;
+	void				*win;
 	double				distance_to_pl;
 	int					width;
 	int					height;
@@ -254,6 +254,8 @@ void					init_game(t_game *game);
 void					init_mlx(t_game *game);
 int						load_textures(t_game *game);
 void					gets_data_addr_of_current_image(t_game *game);
+int						mouse_move(int x, int y, t_game *game);
+int						handle_destroy(t_game *game);
 
 /* texture_mapping */
 void					draw_wall(t_game *game, int screen_x, int wall_height);
