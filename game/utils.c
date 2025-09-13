@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:32:45 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/05 10:17:51 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/12 23:12:00 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,50 @@ int	handle_keypress(int keycode, t_game *game)
 		game->player.turn_dir = -1;
 	else if (keycode == RIGHT_ARROW)
 		game->player.turn_dir = 1;
+	else if (keycode == ATTACK_KEY)
+		game->player.attack = 1;
+	else if (keycode == CHANGE_WEAPON)
+		game->player.weapon = !game->player.weapon;
+	return (0);
+}
+
+int lead_animated_textures(t_game *game)
+{
+	game->knife_img[0].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/1.xpm", &game->knife_img[0].width,
+			&game->knife_img[0].height);
+	if (!game->knife_img[0].img)
+		return (1);
+	game->knife_img[1].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/2.xpm", &game->knife_img[1].width,
+			&game->knife_img[1].height);
+	if (!game->knife_img[1].img)
+		return (1);
+	game->knife_img[2].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/3.xpm", &game->knife_img[2].width,
+			&game->knife_img[2].height);
+	if (!game->knife_img[2].img)
+		return (1);
+
+
+	game->gun_img[0].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/1.xpm", &game->gun_img[0].width,
+			&game->gun_img[0].height);
+	if (!game->gun_img[0].img)
+		return (1);
+	game->gun_img[1].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/2.xpm", &game->gun_img[1].width,
+			&game->gun_img[1].height);
+	if (!game->gun_img[1].img)
+		return (1);
+	game->gun_img[2].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/3.xpm", &game->gun_img[2].width,
+			&game->gun_img[2].height);
+	if (!game->gun_img[2].img)
+		return (1);
+		
+
+		
 	return (0);
 }
 
@@ -78,6 +122,15 @@ int	load_textures(t_game *game)
 			game->data->dir.so, &game->tex_south.width,
 			&game->tex_south.height);
 	if (!game->tex_south.img)
+		return (1);
+
+	game->par.img = mlx_xpm_file_to_image(game->mlx,
+			"./textures/par.xpm", &game->par.width,
+			&game->par.height);
+	if (!game->par.img)
+		return (1);
+	
+	if (lead_animated_textures(game))
 		return (1);
 	gets_data_addr_of_current_image(game);
 	return (0);

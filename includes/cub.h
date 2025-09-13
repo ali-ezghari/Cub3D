@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/08 10:09:26 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:52:32 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,26 @@
 # define S_KEY 115
 # define D_KEY 100
 # define FAR_AWAY 10
-# define SCALE_FACTOR 0.2
+# define SCALE_FACTOR 0.5
 # define TILE_SIZE 64
+# define ATTACK_KEY 102
+# define CHANGE_WEAPON 99
+# define COLOR_RED 0xFF0000
+# define COLOR_GREEN 0x00FF00
+# define COLOR_BLUE 0x0000FF
+# define COLOR_WHITE 0xFFFFFF
+# define COLOR_BLACK 0x000000
+# define COLOR_GREY 0x808080
+
+typedef struct s_animation
+{
+    int current_frame;
+    int total_frames;
+    int frame_width;
+    int frame_height;
+    int frame_delay;
+    int frame_timer;
+} t_animation;
 
 typedef struct s_tex
 {
@@ -108,6 +126,10 @@ typedef struct s_player
 	double				move_speed;
 	double				rotation_speed;
 	int					strafe_dir;
+	int					attack;
+	int					weapon;					
+	int					attack_frame;
+	int 				attack_timer;
 }						t_player;
 
 typedef struct s_game
@@ -129,6 +151,10 @@ typedef struct s_game
 	t_tex				tex_south;
 	t_tex				tex_east;
 	t_tex				tex_west;
+	t_tex				par;
+	t_tex				knife_img[3];
+	t_tex				gun_img[3];
+	t_animation 		player_anim;
 }						t_game;
 
 typedef struct g_help_varible
@@ -236,8 +262,6 @@ bool					find_vert_wall_hit(t_game *game, t_ray *ray, t_vert *v);
 void					init_vert_ray(t_player *player, t_ray *ray, t_vert *v);
 void					init_horz_ray(t_player *player, t_ray *ray, t_horz *h);
 bool					find_horz_wall_hit(t_game *game, t_ray *ray, t_horz *h);
-void					my_mlx_pixel_put(t_game *data, int x, int y,
-							unsigned int color);
 double					normalize_angle(double angle);
 int						has_wall_at(t_game *game, int x, int y);
 double					_2points_dist(double x0, double y0, double x1,
@@ -261,8 +285,14 @@ int						handle_destroy(t_game *game);
 void					draw_wall(t_game *game, int screen_x, int wall_height);
 int						calculate_tex_x(t_ray ray, t_tex *texture);
 unsigned int			get_texture_pixel(t_tex *texture, int x, int y);
-void					my_mlx_pixel_put(t_game *data, int x, int y,
-							unsigned int color);
 t_tex					*determine_wall_texture(t_game *game, t_ray ray);
+void					my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color);
+
+/* minimap */
+void 					draw_minimap(t_game *game);
+
+/* animated sprite */
+void 					draw_animated_part(t_game *game);
+
 
 #endif

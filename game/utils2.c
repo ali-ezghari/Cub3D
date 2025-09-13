@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:31:47 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/06 12:00:07 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/12 23:15:57 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,34 @@ void	gets_data_addr_of_current_image(t_game *game)
 	game->tex_south.addr = mlx_get_data_addr(game->tex_south.img,
 			&game->tex_south.bpp, &game->tex_south.line_len,
 			&game->tex_south.endian);
+
+	game->knife_img[0].addr = mlx_get_data_addr(game->knife_img[0].img,
+			&game->knife_img[0].bpp, &game->knife_img[0].line_len,
+			&game->knife_img[0].endian);		
+				
+	game->knife_img[1].addr = mlx_get_data_addr(game->knife_img[1].img,
+			&game->knife_img[1].bpp, &game->knife_img[1].line_len,
+			&game->knife_img[1].endian);	
+					
+	game->knife_img[2].addr = mlx_get_data_addr(game->knife_img[2].img,
+			&game->knife_img[2].bpp, &game->knife_img[2].line_len,
+			&game->knife_img[2].endian);
+
+	game->gun_img[0].addr = mlx_get_data_addr(game->gun_img[0].img,
+			&game->gun_img[0].bpp, &game->gun_img[0].line_len,
+			&game->gun_img[0].endian);		
+				
+	game->gun_img[1].addr = mlx_get_data_addr(game->gun_img[1].img,
+			&game->gun_img[1].bpp, &game->gun_img[1].line_len,
+			&game->gun_img[1].endian);	
+					
+	game->gun_img[2].addr = mlx_get_data_addr(game->gun_img[2].img,
+			&game->gun_img[2].bpp, &game->gun_img[2].line_len,
+			&game->gun_img[2].endian);
+	
+	game->par.addr = mlx_get_data_addr(game->par.img,
+			&game->par.bpp, &game->par.line_len,
+			&game->par.endian);
 }
 
 int	has_wall_at(t_game *game, int x, int y)

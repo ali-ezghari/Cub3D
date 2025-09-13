@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:06:26 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/06 12:01:08 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/13 17:45:27 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	init_player(t_game *game, t_player *player)
 
 void	init_game(t_game *game)
 {
-	game->width = 1200;
-	game->height = 1200;
+	game->width = 1280;
+	game->height = 720;
 	game->map_rows = game->data->map_length;
 	game->map_cols = game->data->map_width;
 	game->fov_angle = 60 * (PI / 180);

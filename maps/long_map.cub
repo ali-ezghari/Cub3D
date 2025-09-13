@@ -1,5 +1,5 @@
-   C  67, 77, 77
-   F     140, 130, 130
+   C  67,77,77
+   F     140,130,130
 
 NO ./textures/dir_tex/north.xpm
 SO ./textures/dir_tex/south.xpm

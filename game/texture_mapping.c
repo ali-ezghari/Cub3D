@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:21:56 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/07 16:06:38 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/11 23:18:57 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ t_tex	*determine_wall_texture(t_game *game, t_ray ray)
 	}
 }
 
-void	my_mlx_pixel_put(t_game *data, int x, int y, unsigned int color)
+void	my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color)
 {
 	int				bytes;
 	unsigned char	*dst;
 
-	if (x < 0 || x >= data->width || y < 0 || y >= data->height)
-		return ;
-	bytes = data->img.bits_per_pixel / 8;
-	dst = (unsigned char *)data->img.addr + y * data->img.line_length + x
+	bytes = img->bits_per_pixel / 8;
+	dst = (unsigned char *)img->addr + y * img->line_length + x
 		* bytes;
 	dst[0] = color & 0xFF;
 	dst[1] = (color >> 8) & 0xFF;
@@ -103,7 +101,11 @@ void	draw_wall(t_game *game, int screen_x, int wall_height)
 	while (y_start < y_end)
 	{
 		color = get_texture_pixel(game->texture, tex_x, tex_y);
-		my_mlx_pixel_put(game, screen_x, y_start, color);
+		if (screen_x < 0 || screen_x >= game->width
+			|| y_start < 0 || y_start >= game->height)
+			my_mlx_pixel_put(&game->img, screen_x, y_start, color);
+		else
+			continue;
 		tex_y += 1 / scale;
 		y_start++;
 	}
