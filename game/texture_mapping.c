@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/04 17:21:56 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/11 23:18:57 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:18:55 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color)
 	unsigned char	*dst;
 
 	bytes = img->bits_per_pixel / 8;
-	dst = (unsigned char *)img->addr + y * img->line_length + x
-		* bytes;
+	dst = (unsigned char *)img->addr + y * img->line_length + x * bytes;
 	dst[0] = color & 0xFF;
 	dst[1] = (color >> 8) & 0xFF;
 	dst[2] = (color >> 16) & 0xFF;
@@ -50,9 +49,8 @@ unsigned int	get_texture_pixel(t_tex *texture, int x, int y)
 	unsigned char	*pixel;
 
 	bytes_per_pixel = texture->bpp / 8;
-	pixel = (unsigned char *)texture->addr
-		+ y * texture->line_len
-		+ x * bytes_per_pixel;
+	pixel = (unsigned char *)texture->addr + y * texture->line_len + x
+		* bytes_per_pixel;
 	color_ptr = (unsigned int *)pixel;
 	return (*color_ptr);
 }
@@ -82,11 +80,9 @@ int	calculate_tex_x(t_ray ray, t_tex *texture)
 
 void	draw_wall(t_game *game, int screen_x, int wall_height)
 {
-	double			tex_y;
-	double			scale;
 	unsigned int	color;
 
-	int y_start, (tex_x), (y_end);
+	double (tex_y), (scale), (y_start), (tex_x), (y_end);
 	tex_x = calculate_tex_x(game->rays[screen_x], game->texture);
 	y_start = (game->height / 2) - (wall_height / 2);
 	tex_y = 0;
@@ -101,11 +97,11 @@ void	draw_wall(t_game *game, int screen_x, int wall_height)
 	while (y_start < y_end)
 	{
 		color = get_texture_pixel(game->texture, tex_x, tex_y);
-		if (screen_x < 0 || screen_x >= game->width
-			|| y_start < 0 || y_start >= game->height)
+		if (screen_x < 0 || screen_x >= game->width || y_start < 0
+			|| y_start >= game->height)
 			my_mlx_pixel_put(&game->img, screen_x, y_start, color);
 		else
-			continue;
+			continue ;
 		tex_y += 1 / scale;
 		y_start++;
 	}

@@ -6,11 +6,17 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:38:19 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/08 10:07:34 by aezghari         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:23:14 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
+
+int	handle_destroy(t_game *game)
+{
+	cleanup_and_exit(game, 0);
+	return (0);
+}
 
 int	main(int argc, char *argv[])
 {
@@ -21,6 +27,7 @@ int	main(int argc, char *argv[])
 	if (!data)
 		return (1);
 	ft_memset(data, 0, sizeof(t_info));
+	ft_memset(&game, 0, sizeof(game));
 	parser(argc, argv[1], data);
 	game.data = data;
 	init_game(&game);

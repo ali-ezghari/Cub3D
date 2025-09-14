@@ -6,75 +6,52 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:31:47 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/12 23:15:57 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:25:03 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub.h"
 
-int	handle_destroy(t_game *game)
+void	gets_data_addr_of_animated_imgae(t_game *game)
 {
-	cleanup_and_exit(game, 0);
-	return (0);
-}
+	int	i;
 
-int	mouse_move(int x, int y, t_game *game)
-{
-	int		center_x;
-	int		delta_x;
-	float	sens;
-
-	(void)y;
-	center_x = game->width / 2;
-	sens = 0.002;
-	delta_x = x - center_x;
-	game->player.rotation_angle += delta_x * sens;
-	mlx_mouse_move(game->mlx, game->win, center_x, game->height / 2);
-	return (0);
+	i = 0;
+	while (i++ < 3)
+	{
+		game->knife_img[i - 1].addr = mlx_get_data_addr(
+				game->knife_img[i - 1].img, &game->knife_img[i - 1].bpp,
+				&game->knife_img[i - 1].line_len,
+				&game->knife_img[i - 1].endian);
+	}
+	i = 0;
+	while (i++ < 3)
+	{
+		game->gun_img[i - 1].addr = mlx_get_data_addr(
+				game->gun_img[i - 1].img, &game->gun_img[i - 1].bpp,
+				&game->gun_img[i - 1].line_len,
+				&game->gun_img[i - 1].endian);
+	}
 }
 
 void	gets_data_addr_of_current_image(t_game *game)
 {
 	game->tex_west.addr = mlx_get_data_addr(game->tex_west.img,
-			&game->tex_west.bpp, &game->tex_west.line_len,
+			&game->tex_west.bpp,
+			&game->tex_west.line_len,
 			&game->tex_west.endian);
 	game->tex_east.addr = mlx_get_data_addr(game->tex_east.img,
-			&game->tex_east.bpp, &game->tex_east.line_len,
+			&game->tex_east.bpp,
+			&game->tex_east.line_len,
 			&game->tex_east.endian);
 	game->tex_north.addr = mlx_get_data_addr(game->tex_north.img,
-			&game->tex_north.bpp, &game->tex_north.line_len,
+			&game->tex_north.bpp,
+			&game->tex_north.line_len,
 			&game->tex_north.endian);
 	game->tex_south.addr = mlx_get_data_addr(game->tex_south.img,
-			&game->tex_south.bpp, &game->tex_south.line_len,
+			&game->tex_south.bpp,
+			&game->tex_south.line_len,
 			&game->tex_south.endian);
-
-	game->knife_img[0].addr = mlx_get_data_addr(game->knife_img[0].img,
-			&game->knife_img[0].bpp, &game->knife_img[0].line_len,
-			&game->knife_img[0].endian);		
-				
-	game->knife_img[1].addr = mlx_get_data_addr(game->knife_img[1].img,
-			&game->knife_img[1].bpp, &game->knife_img[1].line_len,
-			&game->knife_img[1].endian);	
-					
-	game->knife_img[2].addr = mlx_get_data_addr(game->knife_img[2].img,
-			&game->knife_img[2].bpp, &game->knife_img[2].line_len,
-			&game->knife_img[2].endian);
-
-	game->gun_img[0].addr = mlx_get_data_addr(game->gun_img[0].img,
-			&game->gun_img[0].bpp, &game->gun_img[0].line_len,
-			&game->gun_img[0].endian);		
-				
-	game->gun_img[1].addr = mlx_get_data_addr(game->gun_img[1].img,
-			&game->gun_img[1].bpp, &game->gun_img[1].line_len,
-			&game->gun_img[1].endian);	
-					
-	game->gun_img[2].addr = mlx_get_data_addr(game->gun_img[2].img,
-			&game->gun_img[2].bpp, &game->gun_img[2].line_len,
-			&game->gun_img[2].endian);
-	
-	game->par.addr = mlx_get_data_addr(game->par.img,
-			&game->par.bpp, &game->par.line_len,
-			&game->par.endian);
 }
 
 int	has_wall_at(t_game *game, int x, int y)
@@ -90,8 +67,24 @@ int	has_wall_at(t_game *game, int x, int y)
 	return (game->data->map[map_y][map_x] == '1');
 }
 
+void	cleanup_animated_image(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (game->gun_img[i].img)
+			mlx_destroy_image(game->mlx, game->gun_img[i].img);
+		if (game->knife_img[i].img)
+			mlx_destroy_image(game->mlx, game->knife_img[i].img);
+		i++;
+	}
+}
+
 void	cleanup_and_exit(t_game *game, int exit_code)
 {
+	cleanup_animated_image(game);
 	if (game->tex_west.img)
 		mlx_destroy_image(game->mlx, game->tex_west.img);
 	if (game->tex_north.img)

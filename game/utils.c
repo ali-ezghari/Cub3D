@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 21:32:45 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/12 23:12:00 by mohalaou         ###   ########.fr       */
+/*   Created: 2025/09/14 11:21:18 by mohalaou          #+#    #+#             */
+/*   Updated: 2025/09/14 11:52:54 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,46 +35,6 @@ int	handle_keypress(int keycode, t_game *game)
 	return (0);
 }
 
-int lead_animated_textures(t_game *game)
-{
-	game->knife_img[0].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/knife/1.xpm", &game->knife_img[0].width,
-			&game->knife_img[0].height);
-	if (!game->knife_img[0].img)
-		return (1);
-	game->knife_img[1].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/knife/2.xpm", &game->knife_img[1].width,
-			&game->knife_img[1].height);
-	if (!game->knife_img[1].img)
-		return (1);
-	game->knife_img[2].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/knife/3.xpm", &game->knife_img[2].width,
-			&game->knife_img[2].height);
-	if (!game->knife_img[2].img)
-		return (1);
-
-
-	game->gun_img[0].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/guns/1.xpm", &game->gun_img[0].width,
-			&game->gun_img[0].height);
-	if (!game->gun_img[0].img)
-		return (1);
-	game->gun_img[1].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/guns/2.xpm", &game->gun_img[1].width,
-			&game->gun_img[1].height);
-	if (!game->gun_img[1].img)
-		return (1);
-	game->gun_img[2].img = mlx_xpm_file_to_image(game->mlx,
-			"./animeted/guns/3.xpm", &game->gun_img[2].width,
-			&game->gun_img[2].height);
-	if (!game->gun_img[2].img)
-		return (1);
-		
-
-		
-	return (0);
-}
-
 int	handle_keyrelease(int keycode, t_game *game)
 {
 	if (keycode == ESC_KEY)
@@ -88,17 +48,50 @@ int	handle_keyrelease(int keycode, t_game *game)
 	return (0);
 }
 
-double	normalize_angle(double angle)
+int	lead_guns_texts(t_game *game)
 {
-	angle = fmod(angle, 2 * PI);
-	if (angle < 0)
-		angle += (2 * PI);
-	return (angle);
+	game->knife_img[0].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/1.xpm",
+			&game->knife_img[0].width,
+			&game->knife_img[0].height);
+	if (!game->knife_img[0].img)
+		return (1);
+	game->knife_img[1].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/2.xpm",
+			&game->knife_img[1].width,
+			&game->knife_img[1].height);
+	if (!game->knife_img[1].img)
+		return (1);
+	game->knife_img[2].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/knife/3.xpm",
+			&game->knife_img[2].width,
+			&game->knife_img[2].height);
+	if (!game->knife_img[2].img)
+		return (1);
+	return (0);
 }
 
-double	_2points_dist(double x1, double y1, double x2, double y2)
+int	lead_knife_texts(t_game *game)
 {
-	return (sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2)));
+	game->gun_img[0].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/1.xpm",
+			&game->gun_img[0].width,
+			&game->gun_img[0].height);
+	if (!game->gun_img[0].img)
+		return (1);
+	game->gun_img[1].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/2.xpm",
+			&game->gun_img[1].width,
+			&game->gun_img[1].height);
+	if (!game->gun_img[1].img)
+		return (1);
+	game->gun_img[2].img = mlx_xpm_file_to_image(game->mlx,
+			"./animeted/guns/3.xpm",
+			&game->gun_img[2].width,
+			&game->gun_img[2].height);
+	if (!game->gun_img[2].img)
+		return (1);
+	return (0);
 }
 
 int	load_textures(t_game *game)
@@ -123,15 +116,9 @@ int	load_textures(t_game *game)
 			&game->tex_south.height);
 	if (!game->tex_south.img)
 		return (1);
-
-	game->par.img = mlx_xpm_file_to_image(game->mlx,
-			"./textures/par.xpm", &game->par.width,
-			&game->par.height);
-	if (!game->par.img)
-		return (1);
-	
-	if (lead_animated_textures(game))
+	if (lead_guns_texts(game) || lead_knife_texts(game))
 		return (1);
 	gets_data_addr_of_current_image(game);
+	gets_data_addr_of_animated_imgae(game);
 	return (0);
 }

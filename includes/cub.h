@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:38:38 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/13 17:52:32 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:38:24 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,26 +36,39 @@
 # define S_KEY 115
 # define D_KEY 100
 # define FAR_AWAY 10
-# define SCALE_FACTOR 0.5
 # define TILE_SIZE 64
 # define ATTACK_KEY 102
 # define CHANGE_WEAPON 99
 # define COLOR_RED 0xFF0000
-# define COLOR_GREEN 0x00FF00
-# define COLOR_BLUE 0x0000FF
 # define COLOR_WHITE 0xFFFFFF
 # define COLOR_BLACK 0x000000
 # define COLOR_GREY 0x808080
 
+typedef struct s_animeted_v
+{
+	double				scaled_weapon_width;
+	double				scaled_weapon_height;
+	double				weapon_center_x;
+	double				weapon_center_y;
+	double				start_win_y;
+	double				start_win_x;
+	double				end_win_x;
+	double				end_win_y;
+	double				scale_x;
+	double				scale_y;
+	double				tex_x;
+	double				tex_y;
+}				t_animation_v;
+
 typedef struct s_animation
 {
-    int current_frame;
-    int total_frames;
-    int frame_width;
-    int frame_height;
-    int frame_delay;
-    int frame_timer;
-} t_animation;
+	int					current_frame;
+	int					total_frames;
+	int					frame_width;
+	int					frame_height;
+	int					frame_delay;
+	int					frame_timer;
+}						t_animation;
 
 typedef struct s_tex
 {
@@ -127,9 +140,9 @@ typedef struct s_player
 	double				rotation_speed;
 	int					strafe_dir;
 	int					attack;
-	int					weapon;					
+	int					weapon;
 	int					attack_frame;
-	int 				attack_timer;
+	int					attack_timer;
 }						t_player;
 
 typedef struct s_game
@@ -154,18 +167,20 @@ typedef struct s_game
 	t_tex				par;
 	t_tex				knife_img[3];
 	t_tex				gun_img[3];
-	t_animation 		player_anim;
+	t_animation			player_anim;
+	t_animation_v		vari;
 }						t_game;
 
 typedef struct g_help_varible
 {
+	int					dir_set;
+	int					color;
+	char				next;
+	char				c;
 	int					i;
 	int					j;
 	int					x;
 	int					y;
-	int					dir_set;
-	char				next;
-	char				c;
 }						t_help_varible;
 
 typedef struct s_day_check
@@ -286,13 +301,14 @@ void					draw_wall(t_game *game, int screen_x, int wall_height);
 int						calculate_tex_x(t_ray ray, t_tex *texture);
 unsigned int			get_texture_pixel(t_tex *texture, int x, int y);
 t_tex					*determine_wall_texture(t_game *game, t_ray ray);
-void					my_mlx_pixel_put(t_img *img, int x, int y, unsigned int color);
+void					my_mlx_pixel_put(t_img *img, int x, int y,
+							unsigned int color);
 
 /* minimap */
-void 					draw_minimap(t_game *game);
+void					draw_minimap(t_game *game);
 
 /* animated sprite */
-void 					draw_animated_part(t_game *game);
-
+void					draw_animated_part(t_game *game);
+void					gets_data_addr_of_animated_imgae(t_game *game);
 
 #endif

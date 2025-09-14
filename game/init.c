@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 15:06:26 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/13 17:45:27 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:03:41 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_ray(t_ray *ray, double ray_angle)
 	ray->is_facing_down = ray->ray_angle > 0 && ray->ray_angle < PI;
 	ray->is_facing_up = !ray->is_facing_down;
 	ray->is_facing_right = ray->ray_angle < PI * 0.5
-		||ray->ray_angle > PI * 1.5;
+		|| ray->ray_angle > PI * 1.5;
 	ray->is_facing_left = !ray->is_facing_right;
 	ray->was_hit_vertical = false;
 }
@@ -74,11 +74,14 @@ void	init_mlx(t_game *game)
 	if (!game->mlx)
 		cleanup_and_exit(game, EXIT_FAILURE);
 	game->win = mlx_new_window(game->mlx,
-			game->width, game->height, "cub3d");
+			game->width,
+			game->height,
+			"cub3d");
 	if (!game->win)
 		cleanup_and_exit(game, EXIT_FAILURE);
 	game->img.img = mlx_new_image(game->mlx,
-			game->width, game->height);
+			game->width,
+			game->height);
 	if (!game->img.img)
 		cleanup_and_exit(game, EXIT_FAILURE);
 	game->img.addr = mlx_get_data_addr(

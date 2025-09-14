@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 21:38:33 by aezghari          #+#    #+#             */
-/*   Updated: 2025/09/13 17:50:13 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/14 12:46:09 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ int	draw(t_game *game)
 	render_3d_walls(game);
 	draw_animated_part(game);
 	draw_minimap(game);
-	mlx_put_image_to_window(game->mlx, game->win,
-		game->img.img, 0, 0);
+	mlx_put_image_to_window(game->mlx, game->win, game->img.img, 0, 0);
 	return (0);
 }
