@@ -6,7 +6,7 @@
 /*   By: mohalaou <mohalaou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/13 17:47:42 by mohalaou          #+#    #+#             */
-/*   Updated: 2025/09/14 11:50:26 by mohalaou         ###   ########.fr       */
+/*   Updated: 2025/09/22 20:37:27 by mohalaou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,16 @@ void	draw_minimap(t_game *game)
 {
 	int (x), (y), (tile_x), (tile_y);
 	x = 0;
-	while (x < game->map_rows)
+	while (game->data->map[x])
 	{
 		y = 0;
-		while (y < game->map_cols)
+		while (game->data->map[x][y])
 		{
 			tile_x = y * TILE_SIZE;
 			tile_y = x * TILE_SIZE;
 			if (game->data->map[x][y] == '1')
 				game->data->v->color = COLOR_WHITE;
-			if (game->data->map[x][y] == '0')
+			else
 				game->data->v->color = COLOR_BLACK;
 			draw_rec(game, tile_x, tile_y, TILE_SIZE);
 			y++;
